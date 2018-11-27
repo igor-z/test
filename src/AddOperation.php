@@ -4,7 +4,7 @@ final class AddOperation implements OperationInterface
     private $expression1;
     private $expression2;
 
-    public function __construct(ImmutableCurrencyInterface $expression1, ImmutableCurrencyInterface $expression2)
+    public function __construct(ImmutableNumberInterface $expression1, ImmutableNumberInterface $expression2)
     {
         $this->expression1 = $expression1;
         $this->expression2 = $expression2;

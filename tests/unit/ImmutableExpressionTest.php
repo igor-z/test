@@ -14,10 +14,6 @@ class ImmutableCurrencyTest extends Unit
 
         $this->expectException(ImmutableCurrencyNoRateException::class);
 
-	    $c = $b->mul(10);
-
-	    $this->assertEquals('(((10RUB) * 5 + 5USD - 3RUB) * 2) * 5', $c->describe());
-
 		RUB(10)->asFloat([]);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 final class ImmutableNumber implements ImmutableNumberInterface
 {
-	/** @var OperationInterface|null */
+	/** @var OperationInterface */
 	private $operation;
 	private $amount;
 
-	public function __construct(int $number, ?OperationInterface $operation = null)
+	public function __construct(int $number, OperationInterface $operation)
 	{
 		$this->amount = $number;
 		$this->operation = $operation;
@@ -16,50 +16,33 @@ final class ImmutableNumber implements ImmutableNumberInterface
 		return $this->amount;
 	}
 
-	public function sub(ImmutableCurrencyInterface $expression): ImmutableCurrencyInterface
+	public function sub(ImmutableCurrencyInterface $expression): ImmutableCurrency
 	{
-		$clonedExpression = new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new SubOperation($this, $expression));
-		return $clonedExpression;
+		return new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new SubOperation($this, $expression));
 	}
 
-	public function add(ImmutableCurrencyInterface $expression): ImmutableCurrencyInterface
+	public function add(ImmutableCurrencyInterface $expression): ImmutableCurrency
 	{
-		$clonedExpression = new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new AddOperation($this, $expression));
-		return $clonedExpression;
+		return new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new AddOperation($this, $expression));
 	}
 
-	public function mul(int $multiplier): ImmutableNumberInterface
+	public function mul(int $multiplier): ImmutableNumber
 	{
-		$expression = new ImmutableNumber($multiplier, new MultOperation($this, $multiplier));
-		return $expression;
+		return new ImmutableNumber($multiplier, new MultOperation($this, $multiplier));
 	}
 
 	public function collapse(): array
 	{
-		if ($this->operation) {
-			return $this->operation->collapse();
-		} else {
-			return [
-				$this->currency => $this->amount,
-			];
-		}
+		return $this->operation->collapse();
 	}
 
 	public function describe(): string
 	{
-		if ($this->operation) {
-			return $this->operation->describe();
-		} else {
-			return $this->amount;
-		}
+		return $this->operation->describe();
 	}
 
 	public function asFloat(array $currencyRates): float
 	{
-		if ($this->operation) {
-			return $this->operation->asFloat($currencyRates);
-		} else {
-			return $this->amount;
-		}
+		return $this->operation->asFloat($currencyRates);
 	}
 }

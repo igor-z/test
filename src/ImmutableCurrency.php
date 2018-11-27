@@ -23,22 +23,19 @@ final class ImmutableCurrency implements ImmutableCurrencyInterface
 		return $this->currency;
 	}
 
-	public function sub(ImmutableCurrencyInterface $expression): ImmutableCurrencyInterface
+	public function sub(ImmutableCurrencyInterface $expression): ImmutableCurrency
 	{
-		$clonedExpression = new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new SubOperation($this, $expression));
-		return $clonedExpression;
+		return new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new SubOperation($this, $expression));
 	}
 
-	public function add(ImmutableCurrencyInterface $expression): ImmutableCurrencyInterface
+	public function add(ImmutableCurrencyInterface $expression): ImmutableCurrency
 	{
-		$clonedExpression = new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new AddOperation($this, $expression));
-		return $clonedExpression;
+		return new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new AddOperation($this, $expression));
 	}
 
-	public function mul(int $multiplier): ImmutableNumberInterface
+	public function mul(int $multiplier): ImmutableNumber
 	{
-		$expression = new ImmutableNumber($multiplier, new MultOperation($this, $multiplier));
-		return $expression;
+		return new ImmutableNumber($multiplier, new MultOperation($this, $multiplier));
 	}
 
 	public function collapse(): array

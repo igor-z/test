@@ -4,7 +4,7 @@ final class MultOperation implements OperationInterface
     private $expression;
     private $multiplier;
 
-    public function __construct(ImmutableCurrencyInterface $expression, float $multiplier)
+    public function __construct(ImmutableNumberInterface $expression, float $multiplier)
     {
         $this->expression = $expression;
         $this->multiplier = $multiplier;
