@@ -1,10 +1,10 @@
 <?php
-function RUB(float $number) : ImmutableCurrencyInterface
+function RUB(float $amount) : ImmutableCurrency
 {
-    return new ImmutableCurrency('RUB', $number);
+    return new ImmutableCurrency($amount, 'RUB');
 }
 
-function USD(float $number) : ImmutableCurrencyInterface
+function USD(float $amount) : ImmutableCurrency
 {
-    return new ImmutableCurrency('USD', $number);
+    return new ImmutableCurrency($amount, 'USD');
 }

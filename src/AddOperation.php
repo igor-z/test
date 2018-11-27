@@ -1,30 +1,30 @@
 <?php
 final class AddOperation implements OperationInterface
 {
-    private $expression1;
-    private $expression2;
+    private $currency1;
+    private $currency2;
 
-    public function __construct(ImmutableNumberInterface $expression1, ImmutableNumberInterface $expression2)
+    public function __construct(ImmutableCurrency $currency1, ImmutableCurrency $currency2)
     {
-        $this->expression1 = $expression1;
-        $this->expression2 = $expression2;
+        $this->currency1 = $currency1;
+        $this->currency2 = $currency2;
     }
 
     public function asFloat(array $currencyRates) : float
     {
-    	return $this->expression1->asFloat($currencyRates) + $this->expression2->asFloat($currencyRates);
+    	return $this->currency1->asFloat($currencyRates) + $this->currency2->asFloat($currencyRates);
     }
 
     public function describe(): string
     {
-    	return $this->expression1->describe() . ' + ' . $this->expression2->describe();
+    	return $this->currency1->describe() . ' + ' . $this->currency2->describe();
     }
 
 	public function collapse(): array
 	{
-		$collapse = $this->expression1->collapse();
+		$collapse = $this->currency1->collapse();
 
-		foreach ($this->expression2->collapse() as $currency => $amount) {
+		foreach ($this->currency2->collapse() as $currency => $amount) {
 			$collapse[$currency] = ($collapse[$currency] ?? 0) + $amount;
 		}
 

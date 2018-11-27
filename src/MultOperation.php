@@ -1,29 +1,29 @@
 <?php
 final class MultOperation implements OperationInterface
 {
-    private $expression;
+    private $currency;
     private $multiplier;
 
-    public function __construct(ImmutableNumberInterface $expression, float $multiplier)
+    public function __construct(ImmutableCurrency $currency, float $multiplier)
     {
-        $this->expression = $expression;
+        $this->currency = $currency;
         $this->multiplier = $multiplier;
     }
 
 	public function asFloat(array $currencyRates) : float
 	{
-		return $this->expression->asFloat($currencyRates) * $this->multiplier;
+		return $this->currency->asFloat($currencyRates) * $this->multiplier;
 	}
 
     public function describe(): string
     {
-        return '(' . $this->expression->describe() . ') * '.$this->multiplier;
+        return '(' . $this->currency->describe() . ') * '.$this->multiplier;
     }
 
     public function collapse(): array
     {
     	$collapse = [];
-	    foreach ($this->expression->collapse() as $currency => $amount) {
+	    foreach ($this->currency->collapse() as $currency => $amount) {
 	    	$collapse[$currency] = $amount * $this->multiplier;
 	    }
 

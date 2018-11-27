@@ -1,15 +1,15 @@
 <?php
-final class ImmutableCurrency implements ImmutableCurrencyInterface
+final class ImmutableCurrency
 {
 	/** @var OperationInterface|null */
 	private $operation;
 	private $currency;
 	private $amount;
 
-	public function __construct(string $currency, int $number, ?OperationInterface $operation = null)
+	public function __construct(int $amount, string $currency, ?OperationInterface $operation = null)
 	{
 		$this->currency = $currency;
-		$this->amount = $number;
+		$this->amount = $amount;
 		$this->operation = $operation;
 	}
 
@@ -23,19 +23,19 @@ final class ImmutableCurrency implements ImmutableCurrencyInterface
 		return $this->currency;
 	}
 
-	public function sub(ImmutableCurrencyInterface $expression): ImmutableCurrency
+	public function sub(ImmutableCurrency $currency): ImmutableCurrency
 	{
-		return new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new SubOperation($this, $expression));
+		return new ImmutableCurrency($currency->getAmount(), $currency->getCurrency(), new SubOperation($this, $currency));
 	}
 
-	public function add(ImmutableCurrencyInterface $expression): ImmutableCurrency
+	public function add(ImmutableCurrency $currency): ImmutableCurrency
 	{
-		return new ImmutableCurrency($expression->getCurrency(), $expression->getAmount(), new AddOperation($this, $expression));
+		return new ImmutableCurrency($currency->getAmount(), $currency->getCurrency(), new AddOperation($this, $currency));
 	}
 
-	public function mul(int $multiplier): ImmutableNumber
+	public function mul(int $multiplier): ImmutableCurrency
 	{
-		return new ImmutableNumber($multiplier, new MultOperation($this, $multiplier));
+		return new ImmutableCurrency($multiplier, '', new MultOperation($this, $multiplier));
 	}
 
 	public function collapse(): array
