@@ -10,7 +10,7 @@ final class ImmutableCurrency
 	{
 		$this->currency = $currency;
 		$this->amount = $amount;
-		$this->operation = clone $operation;
+		$this->operation = $operation ? clone $operation : null;
 	}
 
 	public function getAmount(): int
