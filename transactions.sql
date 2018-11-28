@@ -42,6 +42,6 @@ HAVING
             ELSE 0
         END
     ) != 0
-ORDER BY portfolio;
+ORDER BY portfolio DESC;
 
 
