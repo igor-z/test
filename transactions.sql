@@ -19,7 +19,7 @@ SELECT
                 ELSE 0
             END
         ) /
-        SUM(
+        NULLIF(SUM(
             SUM(
                 CASE
                     WHEN loan_transaction.type = 'loan' THEN loan_transaction.amount
@@ -29,7 +29,7 @@ SELECT
                     ELSE 0
                 END
             )
-        ) OVER () * 100,
+        ) OVER (), 0) * 100,
         1
     ) as total_portfolio
 FROM tbl_loan_transaction loan_transaction
