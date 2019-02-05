@@ -10,10 +10,10 @@ final class MultOperation implements OperationInterface
         $this->multiplier = $multiplier;
     }
 
-	public function asFloat(array $currencyRates) : float
-	{
-		return $this->currency->asFloat($currencyRates) * $this->multiplier;
-	}
+    public function asFloat(array $currencyRates) : float
+    {
+        return $this->currency->asFloat($currencyRates) * $this->multiplier;
+    }
 
     public function describe(): string
     {
@@ -22,11 +22,11 @@ final class MultOperation implements OperationInterface
 
     public function collapse(): array
     {
-    	$collapse = [];
-	    foreach ($this->currency->collapse() as $currency => $amount) {
-	    	$collapse[$currency] = $amount * $this->multiplier;
-	    }
+        $collapse = [];
+        foreach ($this->currency->collapse() as $currency => $amount) {
+            $collapse[$currency] = $amount * $this->multiplier;
+        }
 
-	    return $collapse;
+        return $collapse;
     }
 }

@@ -14,6 +14,6 @@ class ImmutableCurrencyTest extends Unit
 
         $this->expectException(ImmutableCurrencyNoRateException::class);
 
-		RUB(10)->asFloat([]);
+        RUB(10)->asFloat([]);
     }
 }

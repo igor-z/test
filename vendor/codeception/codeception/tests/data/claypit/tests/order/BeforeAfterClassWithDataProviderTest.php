@@ -5,7 +5,7 @@
  */
 class BeforeAfterClassWithDataProviderTest extends \Codeception\TestCase\Test
 {
-	/**
+    /**
 	 * @beforeClass
 	 */
 	public static function setUpSomeSharedFixtures()
